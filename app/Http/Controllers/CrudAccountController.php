@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\kelas;
 use App\Models\User;
-
+use App\Models\users_kelas;
 use Illuminate\Http\Request;
+use App\Models\pelajaran;
 
 class CrudAccountController extends Controller
 {
@@ -16,16 +17,27 @@ class CrudAccountController extends Controller
      */
     public function index(Request $request)
     {
-        // Mendapatkan nilai yang dipilih dari elemen <select>
         $selectedRole = $request->input('listRole');
-        // Mengambil data berdasarkan peran yang dipilih atau semua jika tidak ada peran yang dipilih
         $query = User::query();
         
         if ($selectedRole !== null) {
             $query->where('role', $selectedRole);
         }
-        $accounts = $query->with('kelas')->get(); 
-        return view('admin.crud_admin.index', compact('accounts', 'selectedRole'));
+
+        if($selectedRole == 0){
+            $accounts = users_kelas::with(['kelas', 'user'])
+                ->when($selectedRole, function ($query) use ($selectedRole) {
+                    $query->whereHas('user', function ($userQuery) use ($selectedRole) {
+                        $userQuery->where('role', $selectedRole);
+                    });
+                })
+                ->get();
+            
+            return view('admin.crud_admin.index', compact('accounts', 'selectedRole'));
+        }else{
+            $accounts = $query->get();
+            return view('admin.crud_admin.index', compact('accounts', 'selectedRole'));
+        }
     }
     
     
@@ -59,13 +71,20 @@ class CrudAccountController extends Controller
             'role' => array_search($request->role, ['user', 'editor', 'admin']),
         ]);
     
-        // Dapatkan objek kelas berdasarkan nilai 'id_kelas' yang dipilih oleh pengguna.
-        // $kelas = Kelas::find($request->id_kelas);
-    
-        // if ($kelas) {
-        //     $user->kelas()->associate($kelas);
-        //     $user->save();
-        // }
+
+// Assuming $request->input('id') contains the kelas_id
+
+// Retrieve the corresponding nama_kelas
+$namaKelas = Kelas::where('id', $request->input('id'))->value('nama_kelas');
+
+// Create a new users_kelas instance
+$data = new users_kelas();
+$data->kelas_id = $request->input('id');
+$data->user_id = $user->id;
+$data->nama = $request->input('name');
+$data->nama_kelas = $namaKelas; // Assign the retrieved nama_kelas
+$data->save();
+
         return redirect()->route('account.index')->with('success', 'Account berhasil ditambahkan.');
     }
     

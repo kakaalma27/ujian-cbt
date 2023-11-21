@@ -14,8 +14,8 @@ class users_jawaban extends Model
         'user_id',
         'soal_id',
         'jawaban_id',
-        'hasil',
-        'hasil_detail',
+        'kode_akses',
+        'result',
     ];
 
     public function User()
@@ -31,5 +31,14 @@ class users_jawaban extends Model
     public function Jawaban()
     {
         return $this->belongsTo(jawaban::class, 'jawaban_id', 'id');
+    }
+    public function pelajaran()
+    {
+        return $this->belongsTo(Pelajaran::class, 'pelajaran_id', 'id');
+    }
+
+    public function kelas()
+    {
+        return $this->belongsTo(users_kelas::class, 'kelas_id', 'id');
     }
 }

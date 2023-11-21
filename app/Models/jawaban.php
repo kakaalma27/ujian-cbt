@@ -12,6 +12,7 @@ class jawaban extends Model
 
     public function soal()
     {
-        return $this->belongsTo(soal::class, 'soal_id', 'id');
+        return $this->belongsTo(Soal::class, 'soal_id', 'id');
     }
+    
 }

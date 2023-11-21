@@ -24,7 +24,7 @@ class soal extends Model
 
     public function kelas()
     {
-        return $this->belongsTo(Kelas::class, 'kelas_id','id');
+        return $this->belongsTo(users_kelas::class, 'kelas_id','id');
     }
 
     public function pelajaran()
@@ -32,9 +32,10 @@ class soal extends Model
         return $this->belongsTo(Pelajaran::class, 'pelajaran_id','id');
     }
 
-    public function jawaban()
-{
-    return $this->belongsTo(jawaban::class, 'soal_id', 'id');
-}
+    public function jawabans()
+    {
+        return $this->hasMany(Jawaban::class, 'soal_id', 'id');
+    }
+    
 
 }

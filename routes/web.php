@@ -32,6 +32,7 @@ Auth::routes();
 Route::middleware(['auth','user-role:user'])->group(function()
 {
     Route::get("/home",[HomeController::class, 'userHome'])->name("home");
+    Route::post("/home/cek",[UsersJawabanController::class, 'cek'])->name("cek");
 });
 // Route Editor
 Route::middleware(['auth','user-role:guru'])->group(function()
@@ -42,7 +43,6 @@ Route::middleware(['auth','user-role:guru'])->group(function()
     Route::post("/guru/upload", [UjianController::class, 'upload'])->name("guru.upload");
     Route::get("/guru/create", [UjianController::class, 'create'])->name("guru.create");
     Route::post("/guru/uploadExcal", [UjianController::class, 'uploadExcal'])->name("guru.uploadExcal");
-    Route::resource('/guru/demo', UsersJawabanController::class);
 
 });
 // Route Admin

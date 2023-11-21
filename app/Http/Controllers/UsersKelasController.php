@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\kelas;
-use App\Models\User;
+use App\Models\users_kelas;
 use Illuminate\Http\Request;
 
-class KelasController extends Controller
+class UsersKelasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,7 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $kelas = kelas::all();
-        return view('admin.crud_kelas.index', compact('kelas'));
+        //
     }
 
     /**
@@ -26,26 +24,27 @@ class KelasController extends Controller
      */
     public function create()
     {
-
-        return view('admin.crud_kelas.create');
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        $data = new kelas;
-        $data->nama_kelas = $request->input('nama_kelas');
-        $data->save();
-        return redirect()->route('kelas.index')->with('success', 'Kelas berhasil ditambahkan.');
+        //
     }
-    
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\kelas  $kelas
+     * @param  \App\Models\users_kelas  $users_kelas
      * @return \Illuminate\Http\Response
      */
-    public function show(kelas $kelas)
+    public function show(users_kelas $users_kelas)
     {
         //
     }
@@ -53,10 +52,10 @@ class KelasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\kelas  $kelas
+     * @param  \App\Models\users_kelas  $users_kelas
      * @return \Illuminate\Http\Response
      */
-    public function edit(kelas $kelas)
+    public function edit(users_kelas $users_kelas)
     {
         //
     }
@@ -65,10 +64,10 @@ class KelasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\kelas  $kelas
+     * @param  \App\Models\users_kelas  $users_kelas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, kelas $kelas)
+    public function update(Request $request, users_kelas $users_kelas)
     {
         //
     }
@@ -76,10 +75,10 @@ class KelasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\kelas  $kelas
+     * @param  \App\Models\users_kelas  $users_kelas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(kelas $kelas)
+    public function destroy(users_kelas $users_kelas)
     {
         //
     }

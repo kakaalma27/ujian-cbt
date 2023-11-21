@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\jawaban;
 use Illuminate\Http\Request;
+use App\Models\Pelajaran;
+use App\Models\users_jawaban;
 
 class HomeController extends Controller
 {
@@ -21,9 +24,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function userHome()
+    public function userHome(Request $request)
     {
-        return view('home',["msg"=>"Hello! I am user"]);
+        return view('siswa.index',["msg"=>"Hello! I am user"]);
     }
 
     /**

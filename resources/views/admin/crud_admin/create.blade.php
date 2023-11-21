@@ -43,12 +43,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="id">Kelas</label>
-                                <select name="id" id="id" class="form-control" required>
+                                <select name="id" id="id" class="form-control">
                                     @foreach ($kelas as $item)
-                                        <option value="{{ $item->id_kelas }}">{{ $item->nama_kelas }}</option>
+                                        <option value="{{ $item->id }}">{{ $item->nama_kelas }}</option>
                                     @endforeach
                                 </select>
                             </div>
+                            
                             <button type="submit" class="btn btn-dark mt-3">Simpan</button>
                         </form>
                     </div>

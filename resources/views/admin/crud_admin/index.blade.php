@@ -42,20 +42,24 @@
                                     @if($selectedRole === '0')
                                         <th scope="col">Kelas</th>
                                     @endif
+                                    @if($selectedRole === '1')
+                                    <th scope="col">Pelajaran</th>
+                                @endif
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($accounts as $account)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $account->name }}</td>
-                                    <td>{{ $account->email }}</td>
-                                    <td>{{ $account->role }}</td>
+                                    <td>{{ $selectedRole == 0 ? $account->user->name : $account->name }}</td>
+                                    <td>{{ $selectedRole == 0 ? $account->user->email : $account->email }}</td>
+                                    <td>{{ $selectedRole == 0 ? $account->user->role : $account->role }}</td>
+
                                     @if($selectedRole === '0')
                                         @if ($account->kelas)
-                                            <td>{{ $account->kelas->nama_kelas }}</td>
+                                            <td>{{ $account->nama_kelas }}</td>
                                         @else
-                                            <td>No Kelas</td>
+                                            <td>Belum ditambahkan</td>
                                         @endif
                                     @endif
                                 </tr>

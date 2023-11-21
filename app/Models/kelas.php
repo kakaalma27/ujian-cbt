@@ -9,14 +9,6 @@ use Illuminate\Foundation\Auth\User;
 class kelas extends Model
 {
     protected $fillable = [
-        'user_id',
         'nama_kelas',
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
-    
-    
 }

@@ -1,15 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Http\Request;
 use App\Models\Soal;
 use App\Models\kelas;
 use App\Models\jawaban;
 use App\Models\pelajaran;
+use App\Models\users_kelas;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Facades\Excel;
 
-use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 class UjianController extends Controller
 {
@@ -21,7 +23,7 @@ class UjianController extends Controller
         })
         ->get();
 
-        $kelas = kelas::with('user')->get();
+        $kelas = users_kelas::with('user', 'kelas')->get();
 
         return view('guru.crud_soal.index', compact('pelajarans', 'kelas'));
     }
@@ -34,7 +36,7 @@ class UjianController extends Controller
         })
         ->get();
 
-        $kelas = kelas::with('user')->get();
+        $kelas = users_kelas::with('user', 'kelas')->get();
         return view('guru.crud_soal.create', compact('pelajarans', 'kelas'));
     }
 
@@ -83,32 +85,39 @@ class UjianController extends Controller
         try {
             $uploadedFile = $request->file('xlsx_file');
     
-            $import = new Soal;
-            $importedData = Excel::toArray($import, $uploadedFile);
-    
-            $questions = $importedData[0]; 
-            $answers = $importedData[1];   
-    
-            // Create questions
-            foreach ($questions as $questionData) {
+            $reader = new Xlsx();
+            $spreadsheet = $reader->load($uploadedFile);
+            $sheets = $spreadsheet->getActiveSheet()->toArray(null, true, true, false);
+            array_shift($sheets);
+            $idxJawaban = ['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5, 'f' => 6, 'g' => 7, 'h' => 8, 'i' => 9, 'j' => 10]; // tambahkan jika pilihan ganda diatas i dengan rumus prefix => i
+            foreach($sheets as $sheet){
+                $isCorrect = $idxJawaban[trim(strtolower($sheet[count($sheet) - 1]))];
                 $question = Soal::create([
                     'user_id' => auth()->id(),
                     'kelas_id' => $request->input('kelas_id'),
                     'pelajaran_id' => $request->input('pelajaran_id'),
-                    'isi_soal' => $questionData[0],
+                    'isi_soal' => trim($sheet[0]),
                 ]);
-    
-                // Create answers for each question
-                foreach ($answers as $key => $answerData) {
-                    $is_correct = ($request->input('data.isi_jawaban_correct') == $key) ? 1 : 0;
-    
-                    Jawaban::create([
-                        'soal_id' => $question->id,
-                        'isi_jawaban' => $answerData[0], 
-                        'is_correct' => $is_correct,
-                    ]);
+                foreach($sheet as $key => $jawaban){
+                    if($key === 0 || $key === (count($sheet) - 1)){
+                        continue;
+                    }
+                    if($isCorrect === $key){
+                        Jawaban::create([
+                            'soal_id' => $question->id,
+                            'isi_jawaban' => $jawaban, 
+                            'is_correct' => 1,
+                        ]);
+                    }else{
+                        Jawaban::create([
+                            'soal_id' => $question->id,
+                            'isi_jawaban' => $jawaban, 
+                            'is_correct' => 0,
+                        ]);
+                    }
                 }
             }
+    
     
             DB::commit();
     

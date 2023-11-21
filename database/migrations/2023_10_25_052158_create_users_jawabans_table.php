@@ -21,8 +21,11 @@ return new class extends Migration
             $table->foreign('soal_id')->references('id')->on('soals'); 
             $table->unsignedBigInteger('jawaban_id');
             $table->foreign('jawaban_id')->references('id')->on('jawabans'); 
-            $table->text('detail_soal')->nullable();
-            $table->text('detail_jawaban')->nullable();
+            $table->unsignedBigInteger('pelajaran_id');
+            $table->foreign('pelajaran_id')->references('id')->on('pelajarans');             
+            $table->text('kode_akses')->nullable();
+            $table->text('result')->nullable();
+
             $table->timestamps();
         });
     }
