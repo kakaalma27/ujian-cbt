@@ -78,18 +78,6 @@ class CrudAccountController extends Controller
                 'role' => array_search($request->role, ['user', 'editor', 'admin']),
             ]);
     
-            // Get the user ID after creating the user
-            $userId = $user->id;
-    
-            // Retrieve nama_kelas based on the provided 'id'
-            $namaKelas = Kelas::where('id', $request->input('id'))->value('nama_kelas');
-    
-            // Create a new users_kelas instance
-            $data = new kelas();
-            $data->user_id = $userId; // Set the user_id
-            $data->nama_kelas = $namaKelas; // Assign the retrieved nama_kelas
-            $data->save();
-    
             // Commit the transaction if everything is successful
             DB::commit();
     

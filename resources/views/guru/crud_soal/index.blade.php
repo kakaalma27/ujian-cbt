@@ -69,9 +69,14 @@
                           </div>
                           <div class="col">
                               <div class="mb-3">
-                                  <input type="time" class="form-control bg-white" name="jam_menit" id="exampleNumber" placeholder="Menit">
+                                  <input type="time" class="form-control bg-white" name="waktu_mulai" id="exampleNumber" placeholder="Menit">
                               </div>
                           </div>
+                          <div class="col">
+                            <div class="mb-3">
+                                <input type="time" class="form-control bg-white" name="durasi" id="exampleNumber" placeholder="Menit">
+                            </div>
+                        </div>
                           <div class="mb-3 mt-2">
                             <input class="form-control bg-whte" type="file" name="xlsx_file" id="formFile">
                             <button type="submit" class="btn btn-primary mb-1 mt-2">Submit</button>

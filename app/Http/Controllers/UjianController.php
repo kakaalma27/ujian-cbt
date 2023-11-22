@@ -1,17 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\Soal;
+use App\Models\User;
 use App\Models\kelas;
 use App\Models\jawaban;
 use App\Models\pelajaran;
-use App\Models\User;
+use App\Models\usersKelas;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class UjianController extends Controller
 {
@@ -25,9 +27,8 @@ class UjianController extends Controller
 
         $kelas = kelas::with('user')->get();
 
+        $kelas = usersKelas::all();
         return view('guru.crud_soal.index', compact('pelajarans', 'kelas'));
-        $kelas = kelas::all();
-        dd($kelas);
     }
 
     public function create()
@@ -38,7 +39,8 @@ class UjianController extends Controller
         })
         ->get();
 
-        $kelas = User::with('kelas')->get();
+        $kelas = usersKelas::all();
+        dd($kelas);        
         return view('guru.crud_soal.create', compact('pelajarans', 'kelas'));
     }
 
@@ -68,6 +70,10 @@ class UjianController extends Controller
                     'is_correct' => $is_correct,
                 ]);
             }
+            $time = new pelajaran();
+            $time->waktu_mulai = Carbon::parse($request->waktu_mulai)->toDateTime();
+            $time->durasi = $request->durasi;            
+            $time->save();
 
             DB::commit();
     
@@ -119,7 +125,13 @@ class UjianController extends Controller
                     }
                 }
             }
-    
+            $time = new pelajaran();
+            $time->waktu_mulai = Carbon::parse($request->waktu_mulai)->toDateTime();
+            $time->durasi = $request->durasi;            
+            $time->save();
+
+
+            
     
             DB::commit();
     

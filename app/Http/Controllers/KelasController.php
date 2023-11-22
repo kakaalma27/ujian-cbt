@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\kelas;
 use App\Models\User;
+use App\Models\kelas;
+use App\Models\usersKelas;
 use Illuminate\Http\Request;
 
 class KelasController extends Controller
@@ -15,9 +16,30 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $kelas = kelas::all();
-        return view('admin.crud_kelas.index', compact('kelas'));
+        $kelas = Kelas::all();
+        $jumlahSiswa = [];
+    
+        foreach ($kelas as $kelasItem) {
+            if ($kelasItem instanceof Kelas) {
+                $kelasId = $kelasItem->id;
+                $jumlahSiswa[$kelasId] = usersKelas::where('kelas_id', $kelasId)->count('user_id');
+            } else {
+                // Handle the case where $kelasItem is not an instance of Kelas
+                echo "Invalid data type for Kelas";
+            }
+        }
+        $siswa = usersKelas::with('kelas', 'user')
+        ->whereHas('kelas', function ($query) {
+            $query->whereColumn('kelas_id', 'kelas.id');
+        })
+        ->whereHas('user', function ($query) {
+            $query->whereColumn('user_id', 'users.id');
+        })
+        ->get();
+        
+        return view('admin.crud_kelas.index', compact('kelas', 'jumlahSiswa', 'siswa'));
     }
+    
 
     /**
      * Show the form for creating a new resource.

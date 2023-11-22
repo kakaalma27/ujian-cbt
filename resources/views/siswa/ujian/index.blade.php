@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Ujian')
 @section('content')
 <div class="container">
     <div class="row">
@@ -8,11 +9,17 @@
                 <label class="fs-4 fw-normal fw-bold text-light">Informasi Ujian</label>
                </div>
                 <div class="card-body">
+                    @php $kelasTerpilih = null @endphp
+
                     @foreach ($infoUjian as $info)
-                        <div class="mb-3">
-                            <label>Kelas : {{ $info->user->nama_kelas }}</label>
-                        </div>
+                        @if ($info->kelas && $info->kelas->id == $info->kelas_id && $info->kelas->id != $kelasTerpilih)
+                            <div class="mb-3">
+                                <label>Kelas : {{ $info->kelas->nama_kelas }}</label>
+                            </div>
+                            @php $kelasTerpilih = $info->kelas->id @endphp
+                        @endif
                     @endforeach
+                
                     @foreach ($cek as $pelajaran)                        
                         <div class="mb-3">
                             <label>Pelajaran : {{ $pelajaran->pelajaran }}</label>

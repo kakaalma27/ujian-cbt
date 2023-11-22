@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('pelajaran');
             $table->string('kode_akses')->unique();
+            $table->dateTime('waktu_mulai')->nullable();
+            $table->integer('durasi')->nullable();
             $table->timestamps();
         });
     }

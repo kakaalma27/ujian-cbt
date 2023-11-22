@@ -42,16 +42,6 @@
                                     <option value="admin">Admin</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="id">Kelas</label>
-                                <select name="id" id="id" class="form-control">
-                                    @foreach ($kelas as $item)
-                                        <option value="{{ $item->id }}">{{ $item->nama_kelas }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            
-                            
                             <button type="submit" class="btn btn-dark mt-3">Simpan</button>
                         </form>
                     </div>
@@ -61,24 +51,5 @@
     </div>
 </section>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-    $(document).ready(function () {
-        // Initially hide the "Kelas" select box
-        $('#id').hide();
-
-        // Event listener for the "Role" select box
-        $('#role').change(function () {
-            // Get the selected value
-            var selectedRole = $(this).val();
-
-            // Show or hide the "Kelas" select box based on the selected role
-            if (selectedRole === 'user') {
-                $('#id').show();
-            } else {
-                $('#id').hide();
-            }
-        });
-    });
-</script>
 
 @endsection

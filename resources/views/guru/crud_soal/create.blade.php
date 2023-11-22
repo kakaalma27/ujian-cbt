@@ -42,9 +42,14 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col">
+                                <div class="col-6">
                                     <div class="mb-3">
-                                        <input type="time" class="form-control bg-white" name="jam_menit" id="exampleNumber" placeholder="Menit">
+                                        <input type="time" class="form-control bg-white" name="waktu_mulai" step="3600" placeholder="Jam">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <input type="time" class="form-control bg-white" name="durasi" id="exampleNumber" placeholder="Menit">
                                     </div>
                                 </div>
                             </div>
