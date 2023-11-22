@@ -25,7 +25,7 @@ use App\Http\Controllers\UsersKelasController;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -34,6 +34,8 @@ Route::middleware(['auth','user-role:user'])->group(function()
 {
     Route::get("/home",[HomeController::class, 'userHome'])->name("home");
     Route::post("/home/cek",[UsersJawabanController::class, 'cek'])->name("cek");
+    Route::post("/home/store",[UsersJawabanController::class, 'ujian'])->name("ujian");
+
 });
 // Route Editor
 Route::middleware(['auth','user-role:guru'])->group(function()

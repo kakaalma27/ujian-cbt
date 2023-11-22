@@ -3,7 +3,7 @@
 @section('content')
 <section>
     <div class="container">
-        <div class="card">
+        <div class="card mt-2" style="border: none; box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
             <div class="card-header bg-dark text-light">
                 <h1>List Ujian</h1>
             </div>
@@ -43,14 +43,14 @@
           <div class="modal-body">
               <form action="{{route('guru.uploadExcal')}}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="card">
+                <div class="card bg-white" style="border: none; box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;">
                   <div class="card-header bg-dark text-light">
                       <h3>Ujian pilihan Ganda</h3>
                   </div>
                   <div class="card-body">
                       <div class="row">
                           <div class="col-md-4">
-                              <select name="pelajaran_id" id="pelajaran_id" name="data[isi_soal][]" class="form-control">
+                              <select name="pelajaran_id" id="pelajaran_id" name="data[isi_soal][]" class="form-control bg-white">
                                   <option selected>Pilih Pelajaran</option>
 
                                   @foreach ($pelajarans as $pelajaran)
@@ -59,7 +59,7 @@
                               </select>
                           </div>
                           <div class="col-md-4">
-                              <select name="kelas_id" id="kelas_id" class="form-control">
+                              <select name="kelas_id" id="kelas_id" class="form-control bg-white">
                                   <option selected>pilih kelas</option>
 
                                   @foreach ($kelas as $item)
@@ -72,13 +72,14 @@
                                   <input type="time" class="form-control bg-white" name="jam_menit" id="exampleNumber" placeholder="Menit">
                               </div>
                           </div>
+                          <div class="mb-3 mt-2">
+                            <input class="form-control bg-whte" type="file" name="xlsx_file" id="formFile">
+                            <button type="submit" class="btn btn-primary mb-1 mt-2">Submit</button>
+                          </div>
                       </div>
                   </div>
               </div>
-              <div class="mb-3">
-                <input class="form-control bg-whte" type="file" name="xlsx_file" id="formFile">
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
+
               </form>
           </div>
       </div>

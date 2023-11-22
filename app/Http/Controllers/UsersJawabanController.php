@@ -10,6 +10,7 @@ use App\Models\Pelajaran;
 
 use Illuminate\Http\Request;
 use App\Models\users_jawaban;
+use App\Models\usersKelas;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,7 +31,7 @@ class UsersJawabanController extends Controller
         $data->kode_akses = $request->input('kode_akses');
         $cek = Pelajaran::where('kode_akses', $data->kode_akses)->get();
         if ($cek->isNotEmpty()) {
-            $infoUjian = kelas::with('user')->get();
+            $infoUjian = usersKelas::with('user', 'kelas')->get();
             $infoSoal = Soal::with('user')->count();
             $soal = Soal::with('jawabans')->paginate(1);
             return view('siswa.ujian.index', compact('infoUjian', 'cek', 'infoSoal', 'soal'));

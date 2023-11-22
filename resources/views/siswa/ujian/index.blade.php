@@ -3,11 +3,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="card bg-white" style="border: none;">
+            <div class="card bg-white" style="border: none; box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;">
+               <div class="card-header bg-dark text-center">
+                <label class="fs-4 fw-normal fw-bold text-light">Informasi Ujian</label>
+               </div>
                 <div class="card-body">
                     @foreach ($infoUjian as $info)
                         <div class="mb-3">
-                            <label>Kelas : {{ $info->nama_kelas }}</label>
+                            <label>Kelas : {{ $info->user->nama_kelas }}</label>
                         </div>
                     @endforeach
                     @foreach ($cek as $pelajaran)                        
@@ -26,19 +29,20 @@
             </div>
         </div>
         <div class="col-md-12 mt-3">
-            <div class="card bg-white border-0">
+            <form action="{{route('ujian')}}" method="post"></form>
+            <div class="card bg-white border-0" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;">
                 @foreach ($soal as $index => $soals)
-                    <div class="card-header bg-white border-0">
-                        <h5 class="card-title">Soal No: {{ $index + 1 }}</h5>
+                    <div class="card-header border-0 bg-dark">
+                        <label class="fs-4 fw-nromal text-light">Soal No: {{ $index + 1 }}</label>
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
-                            <p class="card-text">{{ $soals->isi_soal }}</p>
+                            <p class="card-text fs-5 fw-bold">{{ $soals->isi_soal }}</p>
                             @foreach ($soals->jawabans as $jawaban)
 
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                <label class="form-check-label fs-5" for="flexRadioDefault1">
                                     {{ $jawaban->isi_jawaban }}                                
                                 </label>
                               </div>
@@ -46,10 +50,11 @@
                         </div>
                     </div>
                 @endforeach
-        
-                <div class="mt-2">
-                    {{ $soal->links() }}
-                </div>
+            </div>
+            <div class="mb-2">
+                @if ($soal->hasMorePages())
+                    <a href="{{ $soal->nextPageUrl() }}" class="btn btn-primary">Next</a>
+                @endif
             </div>
         </div>
     </div>

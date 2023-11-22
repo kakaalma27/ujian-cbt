@@ -32,7 +32,15 @@
                 <div class="card bg-dark text-light">
                     <div class="card-body text-center">
                         <p>0</p>
-                        <label>Total admin</label>
+                        <label>Total Kelas</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card bg-dark text-light">
+                    <div class="card-body text-center">
+                        <p>0</p>
+                        <label>Total Pelajaran</label>
                     </div>
                 </div>
             </div>

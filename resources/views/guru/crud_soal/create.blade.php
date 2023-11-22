@@ -18,14 +18,14 @@
             <form action="{{route('guru.upload')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-12">
-                    <div class="card">
+                    <div class="card" style="border: none; box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;">
                         <div class="card-header bg-dark text-light">
                             <h3>Ujian pilihan Ganda</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <select name="pelajaran_id" id="pelajaran_id" name="data[isi_soal][]" class="form-control">
+                                    <select name="pelajaran_id" id="pelajaran_id" name="pelajaran_id" class="form-control bg-white">
                                         <option selected>Pilih Pelajaran</option>
 
                                         @foreach ($pelajarans as $pelajaran)
@@ -34,7 +34,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <select name="kelas_id" id="kelas_id" class="form-control">
+                                    <select name="kelas_id" id="kelas_id" class="form-control bg-white">
                                         <option selected>pilih kelas</option>
 
                                         @foreach ($kelas as $item)
@@ -52,8 +52,8 @@
                     </div>
                 </div>
                 <div class="col-md-12 mt-5">
-                    <div class="card">
-                        <div class="card-header bg-dark text-light">
+                    <div class="card" style="border: none; box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;">
+                        <div class="card-header bg-dark text-light" >
                             <h3>Soal Ujian</h3>
                         </div>
                         <div class="card-body" id="add_soal">

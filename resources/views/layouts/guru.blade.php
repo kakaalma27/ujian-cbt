@@ -32,6 +32,11 @@
                         <i class="fs-4 bi bi bi-activity"></i></i></i><span class="fs-5 ms-3 d-none d-sm-inline">Soal Ujian</span>
                       </a>
                     </li>
+                    <li class="nav-item py-2 py-sm-0">
+                      <a href="/guru/ujian" class="nav-link text-white">
+                        <i class="fs-4 bi bi bi-activity"></i></i></i><span class="fs-5 ms-3 d-none d-sm-inline">Hasil Ujian</span>
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </div>
