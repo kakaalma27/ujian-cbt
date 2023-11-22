@@ -49,22 +49,25 @@
                             </thead>
                             <tbody>
                                 @foreach ($accounts as $account)
-                                <tr>
-                                    <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $selectedRole == 0 ? $account->user->name : $account->name }}</td>
-                                    <td>{{ $selectedRole == 0 ? $account->user->email : $account->email }}</td>
-                                    <td>{{ $selectedRole == 0 ? $account->user->role : $account->role }}</td>
-
-                                    @if($selectedRole === '0')
-                                        @if ($account->kelas)
-                                            <td>{{ $account->nama_kelas }}</td>
-                                        @else
-                                            <td>Belum ditambahkan</td>
+                                    <tr>
+                                        <th scope="row">{{ $loop->iteration }}</th>
+                                        <td>{{ $selectedRole == 0 ? $account->name : $account->name }}</td>
+                                        <td>{{ $selectedRole == 0 ? $account->email : $account->email }}</td>
+                                        <td>{{ $selectedRole == 0 ? $account->role : $account->role }}</td>
+                            
+                                        @if($selectedRole === '0')
+                                            <td>
+                                                @if ($account->kelas)
+                                                    {{ $account->kelas->nama_kelas }}
+                                                @else
+                                                    Belum ditambahkan
+                                                @endif
+                                            </td>
                                         @endif
-                                    @endif
-                                </tr>
+                                    </tr>
                                 @endforeach
                             </tbody>
+                            
                             
                         </table>
                     </div>

@@ -36,8 +36,9 @@
                             <div class="form-group">
                                 <label for="role">Role</label>
                                 <select name="role" id="role" class="form-control" required>
+                                    <option selected>Open this select menu</option>
                                     <option value="user">User</option>
-                                    <option value="editor">Editor</option>
+                                    <option value="editor">Guru</option>
                                     <option value="admin">Admin</option>
                                 </select>
                             </div>
@@ -50,6 +51,7 @@
                                 </select>
                             </div>
                             
+                            
                             <button type="submit" class="btn btn-dark mt-3">Simpan</button>
                         </form>
                     </div>
@@ -58,4 +60,25 @@
         </div>
     </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Initially hide the "Kelas" select box
+        $('#id').hide();
+
+        // Event listener for the "Role" select box
+        $('#role').change(function () {
+            // Get the selected value
+            var selectedRole = $(this).val();
+
+            // Show or hide the "Kelas" select box based on the selected role
+            if (selectedRole === 'user') {
+                $('#id').show();
+            } else {
+                $('#id').hide();
+            }
+        });
+    });
+</script>
+
 @endsection

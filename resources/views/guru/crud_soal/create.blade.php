@@ -25,11 +25,6 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <input type="text" name="nama_ujian" class="form-control bg-white"  placeholder="nama ujian">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
                                     <select name="pelajaran_id" id="pelajaran_id" name="data[isi_soal][]" class="form-control">
                                         <option selected>Pilih Pelajaran</option>
 

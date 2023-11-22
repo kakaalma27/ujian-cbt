@@ -4,18 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User;
 
-class kelas extends Model
+class usersKelas extends Model
 {
     protected $fillable = [
-        'user_id',
+        'kelas_id',
         'nama_kelas',
     ];
-
-
-    public function user()
+    public function kelas()
     {
-        return $this->belongsTo(user::class, 'user_id', 'id');
+        return $this->belongsTo(kelas::class, 'kelas_id', 'id');
     }
 }

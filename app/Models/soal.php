@@ -18,24 +18,20 @@ class soal extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(user::class, 'user_id', 'id');
     }
-    
 
     public function kelas()
     {
         return $this->belongsTo(users_kelas::class, 'kelas_id','id');
     }
 
-    public function pelajaran()
+    public function pelajarans()
     {
-        return $this->belongsTo(Pelajaran::class, 'pelajaran_id','id');
+        return $this->belongsTo(pelajaran::class, 'pelajaran_id','id');
     }
-
     public function jawabans()
     {
         return $this->hasMany(Jawaban::class, 'soal_id', 'id');
     }
-    
-
 }

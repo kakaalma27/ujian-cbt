@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\kelas;
 use App\Models\User;
+use App\Models\kelas;
+use App\Models\pelajaran;
 use App\Models\users_kelas;
 use Illuminate\Http\Request;
-use App\Models\pelajaran;
+use Illuminate\Support\Facades\DB;
 
 class CrudAccountController extends Controller
 {
@@ -17,27 +18,35 @@ class CrudAccountController extends Controller
      */
     public function index(Request $request)
     {
+        // Get the selected role from the request
         $selectedRole = $request->input('listRole');
+    
+        // Fetch the accounts based on the selected role
         $query = User::query();
-        
+    
         if ($selectedRole !== null) {
             $query->where('role', $selectedRole);
+    
+            // Include related data based on role
+            if ($selectedRole == 0) {
+                $query->with(['kelas' => function ($query) {
+                    $query->select('id', 'nama_kelas');
+                }]);
+            } elseif ($selectedRole == 1) {
+                $query->with(['pelajaran' => function ($query) {
+                    $query->select('id', 'nama_pelajaran');
+                }]);
+            }
         }
-
-        if($selectedRole == 0){
-            $accounts = users_kelas::with(['kelas', 'user'])
-                ->when($selectedRole, function ($query) use ($selectedRole) {
-                    $query->whereHas('user', function ($userQuery) use ($selectedRole) {
-                        $userQuery->where('role', $selectedRole);
-                    });
-                })
-                ->get();
-            
-            return view('admin.crud_admin.index', compact('accounts', 'selectedRole'));
-        }else{
-            $accounts = $query->get();
-            return view('admin.crud_admin.index', compact('accounts', 'selectedRole'));
-        }
+    
+        // Get the users with the specified role and related data
+        $accounts = $query->get();
+    
+        // Pass the data to the view, including the selectedRole
+        return view('admin.crud_admin.index', [
+            'accounts' => $accounts,
+            'selectedRole' => $selectedRole,
+        ]);
     }
     
     
@@ -57,35 +66,41 @@ class CrudAccountController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
-            'role' => 'required|in:user,editor,admin',
-        ]);
+        try {
+            // Start a database transaction
+            DB::beginTransaction();
     
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'role' => array_search($request->role, ['user', 'editor', 'admin']),
-        ]);
+            // Create a new user
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'role' => array_search($request->role, ['user', 'editor', 'admin']),
+            ]);
     
-
-// Assuming $request->input('id') contains the kelas_id
-
-// Retrieve the corresponding nama_kelas
-$namaKelas = Kelas::where('id', $request->input('id'))->value('nama_kelas');
-
-// Create a new users_kelas instance
-$data = new users_kelas();
-$data->kelas_id = $request->input('id');
-$data->user_id = $user->id;
-$data->nama = $request->input('name');
-$data->nama_kelas = $namaKelas; // Assign the retrieved nama_kelas
-$data->save();
-
-        return redirect()->route('account.index')->with('success', 'Account berhasil ditambahkan.');
+            // Get the user ID after creating the user
+            $userId = $user->id;
+    
+            // Retrieve nama_kelas based on the provided 'id'
+            $namaKelas = Kelas::where('id', $request->input('id'))->value('nama_kelas');
+    
+            // Create a new users_kelas instance
+            $data = new kelas();
+            $data->user_id = $userId; // Set the user_id
+            $data->nama_kelas = $namaKelas; // Assign the retrieved nama_kelas
+            $data->save();
+    
+            // Commit the transaction if everything is successful
+            DB::commit();
+    
+            return redirect()->route('account.index')->with('success', 'Account berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            // Rollback the transaction if an error occurs
+            DB::rollback();
+    
+            // Handle the error (log, display a message, etc.)
+            return redirect()->route('account.index')->with('error', 'Gagal menambahkan akun.');
+        }
     }
     
     

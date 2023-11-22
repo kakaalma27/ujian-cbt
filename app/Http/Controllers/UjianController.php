@@ -6,7 +6,7 @@ use App\Models\Soal;
 use App\Models\kelas;
 use App\Models\jawaban;
 use App\Models\pelajaran;
-use App\Models\users_kelas;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,9 +23,11 @@ class UjianController extends Controller
         })
         ->get();
 
-        $kelas = users_kelas::with('user', 'kelas')->get();
+        $kelas = kelas::with('user')->get();
 
         return view('guru.crud_soal.index', compact('pelajarans', 'kelas'));
+        $kelas = kelas::all();
+        dd($kelas);
     }
 
     public function create()
@@ -36,7 +38,7 @@ class UjianController extends Controller
         })
         ->get();
 
-        $kelas = users_kelas::with('user', 'kelas')->get();
+        $kelas = User::with('kelas')->get();
         return view('guru.crud_soal.create', compact('pelajarans', 'kelas'));
     }
 

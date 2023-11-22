@@ -59,23 +59,27 @@ class User extends Authenticatable
     }
     
 
-    public function pelajaran()
-    {
-        return $this->belongsTo(Pelajaran::class, 'pelajaran_id', 'id');
-    }
-
     public function kelas()
     {
-        return $this->belongsTo(users_kelas::class, 'kelas_id', 'id');
+        return $this->belongsTo(kelas::class, 'kelas_id', 'id');
     }
-    public function soal()
+    
+    public function pelajarans()
     {
-        return $this->belongsTo(Soal::class, 'soal_id', 'id');
+        return $this->belongsTo(pelajaran::class, 'pelajaran_id', 'id');
     }
-
+    
+    public function soals()
+    {
+        return $this->belongsTo(soal::class, 'soal_id', 'id');
+    }
+    public function jawabans()
+    {
+        return $this->belongsTo(jawaban::class, 'jawaban_id', 'id');
+    }
     public function usersJawabans()
     {
-        return $this->belongsTo(UsersJawaban::class, 'user_jawaban_id', 'id');
+        return $this->belongsTo(usersJawabans::class, 'user_jawaban_id', 'id');
     }
 
 }

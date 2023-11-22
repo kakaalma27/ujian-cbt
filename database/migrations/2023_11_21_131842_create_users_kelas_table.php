@@ -16,11 +16,8 @@ return new class extends Migration
         Schema::create('users_kelas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('kelas_id');
-            $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('nama');
-            $table->string('nama_kelas');
+            $table->foreign('kelas_id')->references('id')->on('kelas'); 
+            $table->text('nama')->nullable();
             $table->timestamps();
         });
     }

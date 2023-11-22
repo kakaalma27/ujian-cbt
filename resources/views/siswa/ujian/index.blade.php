@@ -47,7 +47,7 @@
                     </div>
                 @endforeach
         
-                <div class="mt-3">
+                <div class="mt-2">
                     {{ $soal->links() }}
                 </div>
             </div>

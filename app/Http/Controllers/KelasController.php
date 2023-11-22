@@ -33,6 +33,7 @@ class KelasController extends Controller
     public function store(Request $request)
     {
         $data = new kelas;
+        $data->user_id = auth()->id();
         $data->nama_kelas = $request->input('nama_kelas');
         $data->save();
         return redirect()->route('kelas.index')->with('success', 'Kelas berhasil ditambahkan.');

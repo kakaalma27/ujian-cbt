@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 use App\Models\Soal;
-use App\Models\jawaban;
-use App\Models\Pelajaran;
 use App\Models\User;
+use App\Models\kelas;
+use App\Models\jawaban;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Pelajaran;
 
-use App\Models\users_jawaban;
-use App\Models\users_kelas;
 use Illuminate\Http\Request;
+use App\Models\users_jawaban;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class UsersJawabanController extends Controller
@@ -29,9 +29,8 @@ class UsersJawabanController extends Controller
         $data = new users_jawaban();
         $data->kode_akses = $request->input('kode_akses');
         $cek = Pelajaran::where('kode_akses', $data->kode_akses)->get();
-    
         if ($cek->isNotEmpty()) {
-            $infoUjian = users_kelas::with('user', 'kelas')->get();
+            $infoUjian = kelas::with('user')->get();
             $infoSoal = Soal::with('user')->count();
             $soal = Soal::with('jawabans')->paginate(1);
             return view('siswa.ujian.index', compact('infoUjian', 'cek', 'infoSoal', 'soal'));

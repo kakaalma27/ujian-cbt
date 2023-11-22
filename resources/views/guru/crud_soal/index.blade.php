@@ -5,7 +5,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header bg-dark text-light">
-                <h1>Soal Ujian</h1>
+                <h1>List Ujian</h1>
             </div>
             <div class="card-body">
                 <a href="{{ route('guru.create') }}" class="btn btn-dark">Tambah soal</a>
@@ -15,9 +15,9 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">judul_soal</th>
-                        <th scope="col">id_soal</th>
-                        <th scope="col">soal</th>
+                        <th scope="col">Kelas</th>
+                        <th scope="col">Pelajaran</th>
+                        <th scope="col">Status</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -25,7 +25,7 @@
                         <th scope="row">1</th>
                         <td>Mark</td>
                         <td>Otto</td>
-                        <td>@mdo</td>
+                        <td>Ujian</td>
                       </tr>
                     </tbody>
                   </table>
@@ -49,11 +49,6 @@
                   </div>
                   <div class="card-body">
                       <div class="row">
-                          <div class="col-md-4">
-                              <div class="mb-3">
-                                  <input type="text" name="nama_ujian" class="form-control bg-white"  placeholder="nama ujian">
-                              </div>
-                          </div>
                           <div class="col-md-4">
                               <select name="pelajaran_id" id="pelajaran_id" name="data[isi_soal][]" class="form-control">
                                   <option selected>Pilih Pelajaran</option>
