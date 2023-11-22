@@ -10,8 +10,9 @@
                         <h1>Kelas</h1>
                     </div>
                     <div class="card-body">
-                      <div class="col-md">
+                      <div class="col-md-4">
                         <a href="{{ route('kelas.create') }}" class="btn btn-dark">Tambah Kelas</a>
+                        <a href="{{ route('admin.anggota') }}" class="btn btn-dark">Tambah anggota</a>
                     </div>
                         <table class="table">
                             <thead>

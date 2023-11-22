@@ -11,6 +11,7 @@ use App\Http\Controllers\CrudAccountController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\UjianController;
 use App\Http\Controllers\UsersJawabanController;
+use App\Http\Controllers\UsersKelasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,6 @@ Route::middleware(['auth','user-role:user'])->group(function()
 Route::middleware(['auth','user-role:guru'])->group(function()
 {
     Route::get("/guru/home",[HomeController::class, 'guruHome'])->name("guru.home");
-
     Route::get("/guru/ujian", [UjianController::class, 'index'])->name("guru.ujian");
     Route::post("/guru/upload", [UjianController::class, 'upload'])->name("guru.upload");
     Route::get("/guru/create", [UjianController::class, 'create'])->name("guru.create");
@@ -52,5 +52,6 @@ Route::middleware(['auth','user-role:admin'])->group(function()
     Route::resource('/admin/account', CrudAccountController::class);
     Route::resource('/admin/pelajaran', PelajaranController::class);
     Route::resource('/admin/kelas', KelasController::class);
-
+    Route::get("/admin/anggota",[UsersKelasController::class, 'create'])->name("admin.anggota");
+    Route::post("/admin/upload",[UsersKelasController::class, 'upload'])->name("admin.upload");
 });

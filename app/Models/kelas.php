@@ -12,8 +12,6 @@ class kelas extends Model
         'user_id',
         'nama_kelas',
     ];
-
-
     public function user()
     {
         return $this->belongsTo(user::class, 'user_id', 'id');
