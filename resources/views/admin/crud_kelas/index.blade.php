@@ -50,8 +50,11 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
+                        @foreach ($kelas as $kelasName)                                  
+                        <th scope="row">{{ $loop->iteration }}</th>
+                        <td>{{ $kelasName->nama_kelas }}</td>
+                    @endforeach
+                    
                         <td>Otto</td>
                       </tr>
                     </tbody>

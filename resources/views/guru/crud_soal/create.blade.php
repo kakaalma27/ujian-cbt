@@ -24,32 +24,36 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-4">
-                                    <select name="pelajaran_id" id="pelajaran_id" name="pelajaran_id" class="form-control bg-white">
-                                        <option selected>Pilih Pelajaran</option>
-
-                                        @foreach ($pelajarans as $pelajaran)
-                                        <option value="{{ $pelajaran->id }}">{{ $pelajaran->pelajaran }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <select name="kelas_id" id="kelas_id" class="form-control bg-white">
-                                        <option selected>pilih kelas</option>
-
-                                        @foreach ($kelas as $item)
-                                        <option value="{{ $item->id }}">{{ $item->nama_kelas }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-6">
+                                <div class="col-md-6">
                                     <div class="mb-3">
-                                        <input type="time" class="form-control bg-white" name="waktu_mulai" step="3600" placeholder="Jam">
+                                        <select name="pelajaran_id" id="pelajaran_id" name="pelajaran_id" class="form-control bg-white">
+                                            <option selected>Pilih Pelajaran</option>
+    
+                                            @foreach ($pelajarans as $pelajaran)
+                                            <option value="{{ $pelajaran->id }}">{{ $pelajaran->pelajaran }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-md-6">
                                     <div class="mb-3">
-                                        <input type="time" class="form-control bg-white" name="durasi" id="exampleNumber" placeholder="Menit">
+                                        <select name="kelas_id" id="kelas_id" class="form-control bg-white">
+                                            <option selected>pilih kelas</option>
+    
+                                            @foreach ($kelas as $item)
+                                            <option value="{{ $item->id }}">{{ $item->nama_kelas }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <input type="number" name="durasi" id="durasi" class="form-control bg-white" value="{{ $time->durasi ?? '' }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control bg-white" name="durasi" placeholder="menit">
                                     </div>
                                 </div>
                             </div>

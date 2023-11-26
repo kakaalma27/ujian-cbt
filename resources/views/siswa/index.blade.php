@@ -19,7 +19,7 @@
                             {{ Auth::user()->name }}
                             <br>
                             </label>
-                            <form action="{{route('cek')}}" method="post">
+                            <form action="{{route('siswa.ujian')}}" method="post">
                                 @csrf
                                 <div class="row">
                                     <div class="col">

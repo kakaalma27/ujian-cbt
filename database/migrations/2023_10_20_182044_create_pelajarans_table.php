@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('pelajaran');
             $table->string('kode_akses')->unique();
             $table->dateTime('waktu_mulai')->nullable();
-            $table->integer('durasi')->nullable();
+            $table->integer('durasi')->default(60);
             $table->timestamps();
         });
     }

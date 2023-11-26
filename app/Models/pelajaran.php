@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pelajaran extends Model
 {
     
-    protected $fillable = ['user_id', 'pelajaran', 'kode_akses', 'waktu_mulai', 'durasi'];
+    protected $fillable = ['user_id', 'pelajaran', 'kode_akses', 'durasi', 'waktu_menit'];
 
     public function user()
     {

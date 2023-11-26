@@ -25,7 +25,7 @@ class UsersJawabanController extends Controller
     {
     }
 
-    public function cek(Request $request)
+    public function ujian(Request $request)
     {
         $data = new users_jawaban();
         $data->kode_akses = $request->input('kode_akses');
@@ -42,43 +42,43 @@ class UsersJawabanController extends Controller
     
     
 
-    public function store(Request $request)
-    {
-        DB::beginTransaction();
-        try {
-            $hasil = $request->input('detail_soal');
-            $soal_ids = Soal::pluck('id')->toArray();
-            $user = auth()->id();
+    // public function store(Request $request)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         $hasil = $request->input('detail_soal');
+    //         $soal_ids = Soal::pluck('id')->toArray();
+    //         $user = auth()->id();
     
-            foreach ($soal_ids as $soal_id) {
-                $jawaban = jawaban::where('isi_jawaban', $hasil)
-                    ->where('soal_id', $soal_id)
-                    ->first();
+    //         foreach ($soal_ids as $soal_id) {
+    //             $jawaban = jawaban::where('isi_jawaban', $hasil)
+    //                 ->where('soal_id', $soal_id)
+    //                 ->first();
     
-                $user_jawaban = new users_jawaban;
-                $user_jawaban->user_id = $user;
-                $user_jawaban->soal_id = $soal_id;
+    //             $user_jawaban = new users_jawaban;
+    //             $user_jawaban->user_id = $user;
+    //             $user_jawaban->soal_id = $soal_id;
     
-                if ($jawaban->is_correct == 1) {
-                    $user_jawaban->jawaban_id = $jawaban->id;
-                    $user_jawaban->detail_soal = $hasil;
-                    $user_jawaban->detail_jawaban = 1;
-                } else {
-                    $user_jawaban->jawaban_id = $jawaban->id;
-                    $user_jawaban->detail_soal = $hasil;
-                    $user_jawaban->detail_jawaban = 0;
-                }
+    //             if ($jawaban->is_correct == 1) {
+    //                 $user_jawaban->jawaban_id = $jawaban->id;
+    //                 $user_jawaban->detail_soal = $hasil;
+    //                 $user_jawaban->detail_jawaban = 1;
+    //             } else {
+    //                 $user_jawaban->jawaban_id = $jawaban->id;
+    //                 $user_jawaban->detail_soal = $hasil;
+    //                 $user_jawaban->detail_jawaban = 0;
+    //             }
     
-                $user_jawaban->save();
-            }
+    //             $user_jawaban->save();
+    //         }
     
-            DB::commit(); // Commit the transaction after the loop
+    //         DB::commit(); // Commit the transaction after the loop
     
-            return response()->json(true);
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            return response('Error: ' . $e->getMessage(), 500);
-        }
-    }
+    //         return response()->json(true);
+    //     } catch (\Throwable $e) {
+    //         DB::rollBack();
+    //         return response('Error: ' . $e->getMessage(), 500);
+    //     }
+    // }
 
 }

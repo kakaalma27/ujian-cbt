@@ -25,9 +25,9 @@ class UjianController extends Controller
         })
         ->get();
 
-        $kelas = kelas::with('user')->get();
+        // $kelas = kelas::with('user')->get();
 
-        $kelas = usersKelas::all();
+        $kelas = kelas::all();
         return view('guru.crud_soal.index', compact('pelajarans', 'kelas'));
     }
 
@@ -38,10 +38,10 @@ class UjianController extends Controller
             $query->where('role', 1);
         })
         ->get();
+        $time = Pelajaran::where('durasi', '>', 0)->first();
 
-        $kelas = usersKelas::all();
-        dd($kelas);        
-        return view('guru.crud_soal.create', compact('pelajarans', 'kelas'));
+        $kelas = kelas::all();
+        return view('guru.crud_soal.create', compact('pelajarans', 'kelas', 'time'));
     }
 
     public function upload(Request $request)
@@ -54,7 +54,10 @@ class UjianController extends Controller
                 'pelajaran_id' => $request->input('pelajaran_id'),
                 'isi_soal' => $request->input('data.isi_soal')[0]
             ]);
-    
+            
+            
+            
+            
             $jawabanArray = $request->input('data.isi_jawaban');
             $totalJawaban = count($jawabanArray);
             
@@ -70,10 +73,6 @@ class UjianController extends Controller
                     'is_correct' => $is_correct,
                 ]);
             }
-            $time = new pelajaran();
-            $time->waktu_mulai = Carbon::parse($request->waktu_mulai)->toDateTime();
-            $time->durasi = $request->durasi;            
-            $time->save();
 
             DB::commit();
     
@@ -125,13 +124,19 @@ class UjianController extends Controller
                     }
                 }
             }
-            $time = new pelajaran();
-            $time->waktu_mulai = Carbon::parse($request->waktu_mulai)->toDateTime();
-            $time->durasi = $request->durasi;            
-            $time->save();
-
-
+            $time = Pelajaran::where('waktu_mulai', null)->update([
+                'waktu_mulai' => Carbon::parse($request->waktu_mulai)->toDateTime(),
+            ]);
             
+            if ($time > 0) {
+                $updatedRecords = Pelajaran::where('waktu_mulai', '!=', null)->get();
+                
+                foreach ($updatedRecords as $record) {
+                    $formattedTime =  Carbon::parse($record->waktu_mulai)->format('H:i:s');
+                    $record->waktu_mulai = $formattedTime;
+                    $record->save();
+                }
+            }
     
             DB::commit();
     

@@ -33,9 +33,7 @@ Auth::routes();
 Route::middleware(['auth','user-role:user'])->group(function()
 {
     Route::get("/home",[HomeController::class, 'userHome'])->name("home");
-    Route::post("/home/cek",[UsersJawabanController::class, 'cek'])->name("cek");
-    Route::post("/home/store",[UsersJawabanController::class, 'ujian'])->name("ujian");
-
+    Route::post("/siswa/ujian", [UsersJawabanController::class, 'ujian'])->name("siswa.ujian");
 });
 // Route Editor
 Route::middleware(['auth','user-role:guru'])->group(function()
